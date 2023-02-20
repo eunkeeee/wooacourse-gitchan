@@ -4,7 +4,7 @@
 
 <br>
 
-## 🧡 Level 1
+## 💋 Level 1
 | Project | Period | Repository | PR | 회고 & 정리 | 
 | --- | --- | --- | --- | --- |
 |자동차 경주 게임 1단계|`2023-02-07` ~ `2023-02-11`|[repository](https://github.com/eunkeeee/java-racingcar/tree/step2)|[PR](https://github.com/woowacourse/java-racingcar/pull/576)|[회고 & 정리](https://engineerinsight.tistory.com/entry/%EC%9A%B0%ED%85%8C%EC%BD%94-1%EC%A3%BC%EC%B0%A8-%EC%9E%90%EB%8F%99%EC%B0%A8-%EA%B2%BD%EC%A3%BC-%EA%B2%8C%EC%9E%84%ED%9A%8C%EA%B3%A0)|
@@ -16,7 +16,7 @@
 
 <br>
 
-## ❤ Precourse
+## 💋 Precourse
 | Project | Period | Repository | PR |
 | --- | --- | --- | --- |
 |점심 메뉴 추천(최종 코딩테스트)|`2022-12-17` ~ `2022-12-17`|[repository](https://github.com/shin-mallang/java-menu)|[PR](https://github.com/woowacourse-precourse/java-menu/pull/42)|
@@ -27,3 +27,7 @@
 
 
 <br/>
+
+## 💋 참고링크
+
+- [방어적 복사와 unmodifiableList](https://tecoble.techcourse.co.kr/post/2021-04-26-defensive-copy-vs-unmodifiable/)
