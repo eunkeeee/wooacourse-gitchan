@@ -103,11 +103,39 @@ public class GameService {
 ### ✔ `@Resource` 어노테이션을 이용하여 빈의 이름으로 주입할 수 있다.
 
 
+```java
+@Repository
+public class DbGameDao implements GameDao {
+    // ...
+}
 
+@Repository
+public class ConsoleGameDao implements GameDao {
+    // ...
+}
 
+@Service
+public class GameService {
+    private GameDao gameDao;
 
+    public void setGameDao(@Resource(name="dbGameDao") GameDao gameDao) { // 이름 지정!
+        this.gameDao = gameDao;
+    }
 
+    // ...
+}
+```
 
+`@Resource` 어노테이션을 사용해서 빈의 이름을 딱 찝어서 지정해줄 수 있다. 
+스프링은 `dbGameDao`라는 이름을 가진 빈을 찾게 된다.
+
+**[개인적 궁금증] `@Resource` 어노테이션의 `name` 속성은 어떻게 정해지는걸까?**
+
+기본적으로 스프링 빈 이름은 클래스 이름의 첫 글자를 소문자로 바꾼 이름이다. 예) `DbGameDao` 클래스 -> `dbGameDao` 이름
+
+`@Component`, `@Service`, `@Repository`와 같은 스프링 어노테이션을 사용하여 빈을 등록할 때는, 해당 어노테이션의 value 속성을 이용하여 빈의 이름을 지정할 수 있다.
+
+예를 들어, `@Repository("myGameDao")`와 같이 어노테이션을 사용하면 빈의 이름을 `myGameDao`로 지정할 수 있다.
 
 
 
