@@ -36,6 +36,3 @@
 
 <br/>
 
-## 💋 참고링크
-
-- [방어적 복사와 unmodifiableList](https://tecoble.techcourse.co.kr/post/2021-04-26-defensive-copy-vs-unmodifiable/)
