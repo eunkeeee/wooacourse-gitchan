@@ -89,6 +89,8 @@ HttpResponse<String> response = client.send(request, BodyHandlers.ofString());
 logger.info("Status {}", response.statusCode());
 ```
 
+_[참고] 추가적으로 HttpClient는 Java 11부터 제공되는 API이므로, 이전 버전의 Java를 사용하는 경우, Apache HttpComponents나 OkHttp와 같은 외부 라이브러리를 사용해야 한다._
+
 여기서 로그를 체크해보면,
 
 <img width="497" alt="스크린샷 2023-04-26 오후 1 43 13" src="https://user-images.githubusercontent.com/107979804/234471921-c08387ac-6ef7-445e-b715-02f970ced624.png">
