@@ -105,7 +105,7 @@ HTTP status 200 → 요청이 성공했다는 것을 알 수 있다!
 
 이제 요청 부분을 조금 바꿔서, 인증을 해달라고 하는 요청으로 보내보자!
 
-아래와 같이 작성했는데, 보다시피 `basic-auth`로 보내니깐 인증을 해달라는 소리인 것 같은데, 우리가 맨 위에서 공부했던 인코딩해서 헤더에 보내는 그런 내용은 없다. 이러면 거절당하는 엔딩이겠지..? 그래도 한 번 확인해보자.
+아래와 같이 작성했는데, 보다시피 `basic-auth`로 보내니깐 인증을 해달라는 말인데, 우리가 맨 위에서 공부했던 인코딩해서 헤더에 보내는 그런 내용은 없다. 이러면 거절당하는 엔딩이겠지..? 그래도 한 번 확인해보자.
 
 
 
@@ -122,6 +122,7 @@ request 부분을 이렇게 바꾸어서 실행해봤다.
     private static final Logger logger = LoggerFactory.getLogger(BasicAuthentication.class);
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
+        // HttpClient는 기본적으로 인증 정보를 제공하지 않으므로, 개발자가 직접 정보를 생성하고 요청에 추가해야 한다. 
 
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
@@ -141,6 +142,10 @@ request 부분을 이렇게 바꾸어서 실행해봤다.
 HTTP status 401 → `사용자가 인증에 실패`했다는 의미이다. 클라이언트가 인증에 필요한 정보를 보내지 않았고, 예측한 대로 역시나 실패! 
 
 그러면, 클라이언트가 인증에 필요한 데이터를 보내도록 바꿔주면 되잖?
+
+
+### ✔ HttpClient Authenticator에 인증 정보와 함께 요청을 보내 인증에 성공해보자!
+
 
 가장 간단하게 HttpClient Builder를 통해서 인증에 필요한 내용을 보내주기로 했다.
 
