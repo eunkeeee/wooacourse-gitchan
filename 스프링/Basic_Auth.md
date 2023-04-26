@@ -40,12 +40,19 @@ HTTP 기본 인증 방식을 사용하면 클라이언트는 간단하게 `usern
 
 이 암호화에 사용할 방법은 **Base64로 인코딩**이다. 이름이 낯선데, 직접 할 일은 없다. 인코딩해주는 메서드를 가져다 쓰면 되는 것이다. 
 
-`credential`은 `username`과 `password`를 콜론(:)으로 이어붙인 문자열을 Base64로 인코딩한 값이다.
+`credential`은 `username`과 `password`를 콜론(:)으로 이어붙인 문자열이다. 
 
-예를 들어, username이 'john'이고 password가 'doe'인 경우, credential은 'john:doe'이며, 이를 Base64로 인코딩하면 'am9objpkb2U='가 된다.
+예를 들어, username이 `john`이고 password가 `doe`인 경우, credential은 `john:doe`이며, 이를 Base64로 인코딩하면 `am9objpkb2U=`가 된다.
+
+```
+username: john
+password: doe
+credential: john:doe
+credential을 Base64로 인코딩: am9objpkb2U=
+```
 
 
-이렇게 일반적으로 HTTP 헤더를 사용한 인증에서는 인증 정보를 **Base64로 인코딩**하여 **Authorization 헤더에 실어서 서버에 전송**한다. 
+이렇게 인코딩해서 포장한 인증 정보를 **Authorization 헤더에 실어서 서버에 전송**한다. 
 
 헤더에 넣게 될 때는 방금 인코딩한 값의 맨 앞에 Basic 이라는 키워드를 붙여서 보낸다!
 
@@ -130,11 +137,12 @@ request 부분을 이렇게 바꾸어서 실행해봤다.
 <img width="493" alt="스크린샷 2023-04-26 오후 1 44 41" src="https://user-images.githubusercontent.com/107979804/234472081-a313f441-e23f-40a4-b568-f1b8cd56328f.png">
 
 
-HTTP status 401 → `Unauthorized`된 것이고, 이 응답은 endpoint는 인증을 필요로 하는데, 클라이언트는 아무 `credential`도 보내지 않았다는 것을 의미한다. 예측한 결과였다. 역시나 실패! 개나소나 다 인증해주진 않았다. 
+HTTP status 401 → `Unauthorized`된 것이고, 이 응답은 endpoint는 인증을 필요로 하는데, 클라이언트는 아무 정보도 보내지 않았다는 것을 의미한다. 예측한 결과였다. 역시나 실패! 개나소나 다 인증해주진 않았다. 
 
 그러면, 클라이언트가 인증에 필요한 데이터를 보내도록 바꿔주면 되잖?
 
-가장 간단하게 HttpClient Builder를 통해서 클라이언트가 만든 `credentials`를 보내주기로 했다. 
+가장 간단하게 HttpClient Builder를 통해서 인증에 필요한 내용을 보내주기로 했다.
+
 
 ```java
 import java.net.URI;
@@ -183,19 +191,18 @@ public class BasicAuthentication {
 
 ## 💋 HTTP 기본 인증(Basic Authentication) 성공하기!
 
-앞에서 말한 내용처럼 `credentials` (`username` 과 `password`)을 *********Authorization********* HTTP header에 특정 형식으로 넣어서 전달해야 한다. 이 특정 형식이라는거는 위에서 설명했듯이 인코딩을 해야 하는데, 지금 보여줄 메서드로 인코딩할 수 있다.
+앞에서 말한 내용처럼 `credentials` (`username` 과 `password`)을 주물주물해서 *********Authorization********* HTTP header에 특정 형식으로 넣어서 전달해야 한다. 이 특정 형식 아래에서 보여줄 메서드로 맞출 수 있다. 
 
 ```java
 private static final String getBasicAuthenticationHeader(String username, String password) {
-    String valueToEncode = username + ":" + password;
+    String valueToEncode = username + ":" + password; 
+    // credential 만들기: 이름이랑 비밀번호를 ':'로 연결하면 됨
     return "Basic " + Base64.getEncoder().encodeToString(valueToEncode.getBytes());
+    // 위에서 만든 credential을 Base64로 인코딩하고, 앞에 'Basic'을 붙이면 끝!
 }
 ```
 
-- 맨 앞에 `Basic`이라고 써줌
-- base64 encoding이라는 방법으로 변환해줌 (암튼 저 코드 쓰면 됨)
-
-이제 이런 방법으로 인코딩해서 만든 내용은 `credential`이라고 한다. 이걸 HTTP header에 넣어서 전달하면 인증이 된다는 소리임!
+이걸 HTTP header에 넣어서 전달하면 인증이 된다는 소리임!
 
 위에서 하던 거에서 바뀐 부분 위주로 주석에 설명해놨음!
 
@@ -212,7 +219,7 @@ public class BasicAuthentication {
                 })
                 .build();
 
-        // request를 보낼 때, header의 "Authorization"에 `credentials`를 그대로 넣는다. 
+        // request를 보낼 때, header의 "Authorization"에 인증을 위한 정보를 암호화해서 넣는다. 
         HttpRequest request = HttpRequest.newBuilder()
                 .GET()
                 .uri(new URI("https://postman-echo.com/basic-auth"))
@@ -224,7 +231,7 @@ public class BasicAuthentication {
         logger.info("Status {}", response.statusCode());
     }
 
-    // 고대로 header에 넣어버릴 수 있는 형태로 암호화해준다. 
+    // 인증 관련 정보(credential)을 암호화하고, 전송 형식에 맞게 반환한다. 
     private static final String getBasicAuthenticationHeader(String username, String password) {
         String valueToEncode = username + ":" + password;
         return "Basic " + Base64.getEncoder().encodeToString(valueToEncode.getBytes());
