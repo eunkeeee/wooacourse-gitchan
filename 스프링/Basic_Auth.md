@@ -144,10 +144,11 @@ HTTP status 401 → `사용자가 인증에 실패`했다는 의미이다. 클�
 그러면, 클라이언트가 인증에 필요한 데이터를 보내도록 바꿔주면 되잖?
 
 
-### ✔ HttpClient Authenticator에 인증 정보와 함께 요청을 보내 인증에 성공해보자!!!
+## 💋 HTTP 기본 인증(Basic Authentication) 방식을 사용해서 인증에 성공해보자!
 
+아래에 설명되는 두 방식은 모두 HTTP 요청 헤더에 인증 정보를 포함시키는 것으로, 구현 방식은 약간 다르지만 기능적으로 동일하다.
 
-가장 간단하게 HttpClient Builder를 통해서 인증에 필요한 내용을 보내주기로 했다.
+### ✔ HttpClient.Builder의 authenticator 메소드를 사용하여 인증 정보를 제공
 
 
 ```java
@@ -185,17 +186,16 @@ public class BasicAuthentication {
 }
 ```
 
-이거 이대로 돌리면!
+이거 이대로 실행시키면!
 
 
 <img width="501" alt="스크린샷 2023-04-26 오후 1 47 54" src="https://user-images.githubusercontent.com/107979804/234472470-e673616a-bc13-451e-ab07-c891b5311588.png">
 
 인증에 필요한 정보를 함께 보내줬더니 200이라고 잘 되었다고 뜬다.
 
-하지만 우리가 목표하던건 이게 아니었지! 우리는 header에 이 내용을 보내고 싶은 거였다. 
 
 
-### ✔ HTTP 기본 인증(Basic Authentication) 방식을 사용해서 header를 통한 요청에 성공해보자!
+### ✔ HttpRequest.Builder의 header 메소드를 사용하여 Authorization 헤더를 직접 추가
 
 앞에서 말한 내용처럼 `credentials` (`username` 과 `password`)을 주물주물해서 *********Authorization********* HTTP header에 특정 형식으로 넣어서 전달해야 한다. 이 특정 형식 아래에서 보여줄 메서드로 맞출 수 있다. 
 
