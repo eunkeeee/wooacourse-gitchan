@@ -1,6 +1,6 @@
 # Authentication
 
-### **💋** Basic Authentication
+## **💋** Basic Authentication
 
 - 클라이언트는 간단하게 `username` 과 `password` 로 인증 가능
 
@@ -12,7 +12,7 @@ Basic YmFlbGR1bmc6SHR0cENsaWVudA==
 
 Basic 이라는 키워드로 시작해서 뒤에 *username:password* 의 내용을 가진 base64-encoded value가 온다. 
 
-### **💋 Java HttpClient**
+## **💋 Java HttpClient**
 
 일반적인 GET Request부터 살펴보자.
 
@@ -41,7 +41,7 @@ logger.info("Status {}", response.statusCode());
 
 HTTP status 200 → 요청이 성공했다는 것을 알 수 있다!
 
-### **💋** HttpClient Authenticator 사용하기
+## **💋** HttpClient Authenticator 사용하기
 
 Postman Echo endpoint의 URL을 사용해보자!
 
@@ -54,7 +54,7 @@ HttpRequest request = HttpRequest.newBuilder()
 
 request 부분을 이렇게 바꾸어서 실행해봤다. 
 
-```
+```java
     private static final Logger logger = LoggerFactory.getLogger(BasicAuthentication.class);
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
         HttpClient client = HttpClient.newHttpClient();
@@ -78,7 +78,15 @@ HTTP status 401 → `Unauthorized`된 것이고, 이 응답은 endpoint는 인�
 
 그러면 클라이언트가 `username`과 `password`로 이루어진 `credential`을 보내도록 바구면 되잖?
 
-```
+```java
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class BasicAuthentication {
     private static final Logger logger = LoggerFactory.getLogger(BasicAuthentication.class);
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
