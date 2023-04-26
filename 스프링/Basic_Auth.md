@@ -212,7 +212,7 @@ private static final String getBasicAuthenticationHeader(String username, String
 
 위에서 하던 거에서 바뀐 부분 위주로 주석에 설명해놨음!
 
-```
+```java
 public class BasicAuthentication {
     private static final Logger logger = LoggerFactory.getLogger(BasicAuthentication.class);
     public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
