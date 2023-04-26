@@ -23,7 +23,9 @@
 ## **💋** HTTP 기본 인증(Basic Authentication)
 
 HTTP 기본 인증은 **HTTP header를 사용하는 인증 방법** 중에 하나이다. 
-인증을 하기 위해서는, 내가 나라는 걸 증명하는 것이다. 증명하기 위해서는 가장 쉽게 생각해보면 `username` 과 `password`이 필요하다. 
+
+
+인증을 하기 위해서는, 내가 나라는 걸 증명해야 한다. 증명하기 위해서는 가장 쉽게 생각해보면 `username` 과 `password`이 필요하다. 
 
 HTTP 기본 인증 방식을 사용하면 클라이언트는 간단하게 `username` 과 `password` 를 header에 보내서 인증 가능하다. 
 
