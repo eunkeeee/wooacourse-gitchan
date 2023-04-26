@@ -1,19 +1,33 @@
-# Authentication
+### 💋 Authentication
 
-스프링에서 지원하는 인증 방법은 정말정말 많다. 
+인증은 **사용자의 신원을 확인하는 과정**이다. 
 
-대표적으로는 form login, OAuth2, JWT, Basic Authentication 등이 있다.
-
-오늘은 그중에 basic한 방법을 사용하는 Basic Authentication에 대해 공부해보려고 한다! 
+스프링에서 인증은 보안과 직결되기 때문에 매우 중요한 부분이며, 아래와 같은 절차를 따른다.
 
 
-## **💋** Basic Authentication
 
-Basic Authentication은 **HTTP header를 사용하는 인증 방법** 중에 하나이다. 
+> 1. 사용자가 로그인 페이지에 접근하여 아이디와 비밀번호를 입력합니다.
+> 2. 입력받은 아이디와 비밀번호를 가지고 인증 매커니즘을 통해 사용자의 정보를 확인합니다.
+> 3. 사용자 정보가 확인되면, 인증 매커니즘은 사용자의 권한 정보까지 확인하여 인증된 사용자로 세션을 생성합니다.
+
+
+
+
+스프링에서 지원하는 인증 방법은 여러 가지가있다. 
+
+대표적으로는 폼 인증(Form Authentication), HTTP 기본 인증(Basic Authentication), OAuth2 등이 있다.
+
+
+오늘은 그중에서 HTTP 기본 인증(Basic Authentication)에 대해 공부해보려고 한다! 
+
+
+## **💋** HTTP 기본 인증(Basic Authentication)
+
+HTTP 기본 인증은 **HTTP header를 사용하는 인증 방법** 중에 하나이다. 
 
 먼저 인증이 뭘까? 내가 나라는 걸 증명하는 것이다. 증명하기 위해서는 가장 쉽게 생각해보면 `username` 과 `password`이 필요하다. 
 
-Basic Authentication 방식을 사용하면 클라이언트는 간단하게 `username` 과 `password` 를 header에 보내서 인증 가능하다. 
+HTTP 기본 인증 방식을 사용하면 클라이언트는 간단하게 `username` 과 `password` 를 header에 보내서 인증 가능하다. 
 
 근데... `username` 과 `password` 를 그대로 보내면 안되겠지...?
 
@@ -36,9 +50,13 @@ Basic Authentication 방식을 사용하면 클라이언트는 간단하게 `use
 헤더에 넣게 될 때는 방금 인코딩한 값의 맨 앞에 Basic 이라는 키워드를 붙여서 보낸다!
 
 
+
+
 먼저, client가 request를 보내서 서버로부터 response를 받는 과정을 자바 코드로 만들어보자. 
 
 그래야지 위에서 설명한 내용을 header에 넣어서 보내는 방법도 자연스럽게 된다. 
+
+
 
 ## **💋 Java HttpClient**
 
@@ -163,7 +181,7 @@ public class BasicAuthentication {
 하지만 우리가 목표하던건 이게 아니었지! 우리는 header에 이 내용을 보내고 싶은 거였다. 
 
 
-## 💋 HTTP Header 사용해서 인증하기
+## 💋 HTTP 기본 인증(Basic Authentication) 성공하기!
 
 앞에서 말한 내용처럼 `credentials` (`username` 과 `password`)을 *********Authorization********* HTTP header에 특정 형식으로 넣어서 전달해야 한다. 이 특정 형식이라는거는 위에서 설명했듯이 인코딩을 해야 하는데, 지금 보여줄 메서드로 인코딩할 수 있다.
 
@@ -226,7 +244,13 @@ public class BasicAuthentication {
 
 
 
+### 💋 하지만, HTTP 기본 인증은 보안성이 떨어진다. 
 
+그런데, 우리가 이렇게 열심히 공부한 이 방법은 그닥 좋은 방법은 아니다. 
+
+HTTP 기본 인증(Basic Authentication) 방식은 사용자의 아이디와 비밀번호를 요청 헤더에 포함시켜 보내기 때문에, 요청을 가로채면 아이디와 비밀번호를 쉽게 볼 수 있다. 또한, 요청 헤더를 수정하는 공격(Header Injection)도 가능하다.
+
+HTTPS와 함께 사용하면 그나마 보완할 수 있다. HTTPS를 사용하면, 클라이언트와 서버 간 통신이 암호화되기 때문에, 중간에 요청을 가로채더라도 아이디와 비밀번호를 알아내기가 어려워진다. 또한, HTTPS를 사용하면 요청 헤더를 수정하는 공격도 방지할 수 있다. HTTPS는 요청 헤더와 응답 헤더를 모두 암호화하기 때문에, 요청이나 응답을 가로채더라도 헤더를 수정하는 것이 불가능하다.
 
 
 
