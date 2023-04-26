@@ -144,7 +144,7 @@ HTTP status 401 → `사용자가 인증에 실패`했다는 의미이다. 클�
 그러면, 클라이언트가 인증에 필요한 데이터를 보내도록 바꿔주면 되잖?
 
 
-### ✔ HttpClient Authenticator에 인증 정보와 함께 요청을 보내 인증에 성공해보자!
+### ✔ HttpClient Authenticator에 인증 정보와 함께 요청을 보내 인증에 성공해보자!!!
 
 
 가장 간단하게 HttpClient Builder를 통해서 인증에 필요한 내용을 보내주기로 했다.
