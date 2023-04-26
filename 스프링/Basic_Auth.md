@@ -65,7 +65,7 @@ credential을 Base64로 인코딩: am9objpkb2U=
 
 
 
-## **💋 Java HttpClient**
+### ✔ Java HttpClient을 사용해서 요청을 보내고 응답을 받아보자! (인증 내용 X)
 
 일반적인 GET Request부터 살펴보자.
 
@@ -98,8 +98,7 @@ HTTP status 200 → 요청이 성공했다는 것을 알 수 있다!
 요청을 잘 받는 연습을 했다. 이제 인증까지 우겨넣어볼까?
 
 
-
-## **💋** HttpClient Authenticator 사용하기
+### ✔ HttpClient Authenticator에 인증 정보 없이 요청을 보내고 실패해보자!
 
 
 이제 요청 부분을 조금 바꿔서, 인증을 해달라고 하는 요청으로 보내보자!
@@ -189,7 +188,7 @@ public class BasicAuthentication {
 하지만 우리가 목표하던건 이게 아니었지! 우리는 header에 이 내용을 보내고 싶은 거였다. 
 
 
-## 💋 HTTP 기본 인증(Basic Authentication) 성공하기!
+### ✔ HTTP 기본 인증(Basic Authentication) 방식을 사용해서 header를 통한 요청에 성공해보자!
 
 앞에서 말한 내용처럼 `credentials` (`username` 과 `password`)을 주물주물해서 *********Authorization********* HTTP header에 특정 형식으로 넣어서 전달해야 한다. 이 특정 형식 아래에서 보여줄 메서드로 맞출 수 있다. 
 
