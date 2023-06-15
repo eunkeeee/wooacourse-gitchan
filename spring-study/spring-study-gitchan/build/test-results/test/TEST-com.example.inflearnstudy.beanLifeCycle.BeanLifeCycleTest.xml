@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="com.example.inflearnstudy.beanLifeCycle.BeanLifeCycleTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-06-14T05:50:36" hostname="starlight.local" time="0.13">
+  <properties/>
+  <testcase name="lifeCycleTest()" classname="com.example.inflearnstudy.beanLifeCycle.BeanLifeCycleTest" time="0.13"/>
+  <system-out><![CDATA[14:50:36.138 [Test worker] DEBUG org.springframework.context.annotation.AnnotationConfigApplicationContext - Refreshing org.springframework.context.annotation.AnnotationConfigApplicationContext@550a1967
+14:50:36.144 [Test worker] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalConfigurationAnnotationProcessor'
+14:50:36.184 [Test worker] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerProcessor'
+14:50:36.186 [Test worker] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.context.event.internalEventListenerFactory'
+14:50:36.186 [Test worker] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalAutowiredAnnotationProcessor'
+14:50:36.187 [Test worker] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'org.springframework.context.annotation.internalCommonAnnotationProcessor'
+14:50:36.190 [Test worker] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'beanLifeCycleTest.LifeCycleConfig'
+14:50:36.191 [Test worker] DEBUG org.springframework.beans.factory.support.DefaultListableBeanFactory - Creating shared instance of singleton bean 'dataConnectionClient'
+생성자 호출, url = null
+connect: http://gitchan.dev
+call: http://gitchan.dev message = 초기화 연결 메시지
+close + http://gitchan.dev
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>
