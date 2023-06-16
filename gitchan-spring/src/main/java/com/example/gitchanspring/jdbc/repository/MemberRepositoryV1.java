@@ -9,7 +9,7 @@ import java.util.NoSuchElementException;
 import static com.example.gitchanspring.jdbc.connection.DbConnectionUtil.getConnection;
 
 @Slf4j
-public class MemberRepository {
+public class MemberRepositoryV1 {
 
     public Member save(final Member member) throws SQLException {
         final String sql = "INSERT INTO member (member_id, money) VALUES (?, ?)";
