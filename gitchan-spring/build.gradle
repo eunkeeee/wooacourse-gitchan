@@ -25,7 +25,7 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok'
     testAnnotationProcessor 'org.projectlombok:lombok'
 }
-가
+
 tasks.named('test') {
     useJUnitPlatform()
 }
