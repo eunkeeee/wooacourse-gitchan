@@ -15,4 +15,20 @@ public class Member {
         this.memberId = memberId;
         this.money = money;
     }
+
+    public String getMemberId() {
+        return memberId;
+    }
+
+    public void setMemberId(final String memberId) {
+        this.memberId = memberId;
+    }
+
+    public int getMoney() {
+        return money;
+    }
+
+    public void setMoney(final int money) {
+        this.money = money;
+    }
 }
