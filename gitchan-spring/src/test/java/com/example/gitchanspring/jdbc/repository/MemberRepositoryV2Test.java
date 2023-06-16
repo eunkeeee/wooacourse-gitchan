@@ -1,10 +1,10 @@
 package com.example.gitchanspring.jdbc.repository;
 
 import com.example.gitchanspring.jdbc.domain.Member;
+import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
@@ -20,12 +20,16 @@ class MemberRepositoryV2Test {
 
     @BeforeEach
     void setUp() {
-        DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setJdbcUrl(URL);
+        dataSource.setUsername(USERNAME);
+        dataSource.setPassword(PASSWORD);
+
         repository = new MemberRepositoryV2(dataSource);
     }
 
     @Test
-    void crud() throws SQLException {
+    void crud() throws SQLException, InterruptedException {
         // save
         final Member member = new Member("memberV100", 10000);
         repository.save(member);
@@ -44,5 +48,7 @@ class MemberRepositoryV2Test {
         repository.delete(member.getMemberId());
         assertThatThrownBy(() -> repository.findById(member.getMemberId()))
                 .isInstanceOf(NoSuchElementException.class);
+
+        Thread.sleep(1000);
     }
 }
