@@ -14,6 +14,9 @@ import static com.example.gitchanspring.jdbc.connection.ConnectionConst.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
+/*
+ * 트랜잭션 - 파라미터 전달 방식
+ * */
 @Slf4j
 class MemberServiceV2Test {
 
@@ -28,7 +31,7 @@ class MemberServiceV2Test {
     void setUp() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
         memberRepository = new MemberRepositoryV2(dataSource);
-        memberService = new MemberServiceV2(memberRepository);
+        memberService = new MemberServiceV2(dataSource, memberRepository);
     }
 
     @AfterEach
@@ -68,7 +71,7 @@ class MemberServiceV2Test {
         final Member findMemberA = memberRepository.findById(memberA.getMemberId());
         final Member findMemberEX = memberRepository.findById(memberEX.getMemberId());
 
-        assertThat(findMemberA.getMoney()).isEqualTo(8000);
+        assertThat(findMemberA.getMoney()).isEqualTo(10000);
         assertThat(findMemberEX.getMoney()).isEqualTo(10000);
     }
 }

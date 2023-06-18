@@ -1,7 +1,7 @@
 package com.example.gitchanspring.jdbc.service;
 
 import com.example.gitchanspring.jdbc.domain.Member;
-import com.example.gitchanspring.jdbc.repository.MemberRepositoryV3;
+import com.example.gitchanspring.jdbc.repository.MemberRepositoryV1;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,24 +14,21 @@ import static com.example.gitchanspring.jdbc.connection.ConnectionConst.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
-/*
- * 트랜잭션 - 파라미터 전달 방식
- * */
 @Slf4j
-class MemberServiceV3Test {
+class MemberServiceV1Test {
 
     private static final String MEMBER_A = "memberA";
     private static final String MEMBER_B = "memberB";
     private static final String MEMBER_EX = "ex";
 
-    private MemberRepositoryV3 memberRepository;
-    private MemberServiceV3 memberService;
+    private MemberRepositoryV1 memberRepository;
+    private MemberServiceV1 memberService;
 
     @BeforeEach
     void setUp() {
         final DriverManagerDataSource dataSource = new DriverManagerDataSource(URL, USERNAME, PASSWORD);
-        memberRepository = new MemberRepositoryV3(dataSource);
-        memberService = new MemberServiceV3(dataSource, memberRepository);
+        memberRepository = new MemberRepositoryV1(dataSource);
+        memberService = new MemberServiceV1(memberRepository);
     }
 
     @AfterEach
@@ -71,7 +68,7 @@ class MemberServiceV3Test {
         final Member findMemberA = memberRepository.findById(memberA.getMemberId());
         final Member findMemberEX = memberRepository.findById(memberEX.getMemberId());
 
-        assertThat(findMemberA.getMoney()).isEqualTo(10000);
+        assertThat(findMemberA.getMoney()).isEqualTo(8000);
         assertThat(findMemberEX.getMoney()).isEqualTo(10000);
     }
 }

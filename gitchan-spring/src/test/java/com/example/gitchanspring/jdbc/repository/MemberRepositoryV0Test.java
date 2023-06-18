@@ -1,35 +1,21 @@
 package com.example.gitchanspring.jdbc.repository;
 
 import com.example.gitchanspring.jdbc.domain.Member;
-import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.NoSuchElementException;
 
-import static com.example.gitchanspring.jdbc.connection.ConnectionConst.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 @Slf4j
-class MemberRepositoryV2Test {
-
-    private MemberRepositoryV2 repository;
-
-    @BeforeEach
-    void setUp() {
-        HikariDataSource dataSource = new HikariDataSource();
-        dataSource.setJdbcUrl(URL);
-        dataSource.setUsername(USERNAME);
-        dataSource.setPassword(PASSWORD);
-
-        repository = new MemberRepositoryV2(dataSource);
-    }
+class MemberRepositoryV0Test {
+    MemberRepositoryV0 repository = new MemberRepositoryV0();
 
     @Test
-    void crud() throws SQLException, InterruptedException {
+    void crud() throws SQLException {
         // save
         final Member member = new Member("memberV100", 10000);
         repository.save(member);
@@ -48,7 +34,5 @@ class MemberRepositoryV2Test {
         repository.delete(member.getMemberId());
         assertThatThrownBy(() -> repository.findById(member.getMemberId()))
                 .isInstanceOf(NoSuchElementException.class);
-
-        Thread.sleep(1000);
     }
 }

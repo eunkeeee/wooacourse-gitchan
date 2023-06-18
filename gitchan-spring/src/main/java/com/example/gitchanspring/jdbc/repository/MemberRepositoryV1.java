@@ -2,14 +2,26 @@ package com.example.gitchanspring.jdbc.repository;
 
 import com.example.gitchanspring.jdbc.domain.Member;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.jdbc.support.JdbcUtils;
 
+import javax.sql.DataSource;
 import java.sql.*;
 import java.util.NoSuchElementException;
 
-import static com.example.gitchanspring.jdbc.connection.DbConnectionUtil.getConnection;
-
 @Slf4j
 public class MemberRepositoryV1 {
+
+    private final DataSource dataSource;
+
+    public MemberRepositoryV1(final DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
+
+    private Connection getConnection() throws SQLException {
+        final Connection connection = dataSource.getConnection();
+        log.info("get connection={}", connection);
+        return connection;
+    }
 
     public Member save(final Member member) throws SQLException {
         final String sql = "INSERT INTO member (member_id, money) VALUES (?, ?)";
@@ -105,24 +117,8 @@ public class MemberRepositoryV1 {
     }
 
     private void close(final Connection connection, final Statement statement, final ResultSet resultSet) {
-        if (resultSet != null) {
-            try {
-                resultSet.close();
-            } catch (SQLException e) {
-                log.error("error", e);
-            }
-        }
-
-        try {
-            statement.close();
-        } catch (SQLException e) {
-            log.info("error", e);
-        }
-
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            log.info("error", e);
-        }
+        JdbcUtils.closeResultSet(resultSet);
+        JdbcUtils.closeStatement(statement);
+        JdbcUtils.closeConnection(connection);
     }
 }

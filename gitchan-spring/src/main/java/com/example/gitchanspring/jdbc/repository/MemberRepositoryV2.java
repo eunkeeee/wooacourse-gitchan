@@ -18,6 +18,7 @@ public class MemberRepositoryV2 {
     }
 
     private Connection getConnection() throws SQLException {
+        // create new connection
         final Connection connection = dataSource.getConnection();
         log.info("get connection={}", connection);
         return connection;
@@ -73,6 +74,34 @@ public class MemberRepositoryV2 {
         }
     }
 
+    public Member findById(final Connection connection, final String memberId) throws SQLException {
+        final String sql = "SELECT * FROM member WHERE member_id = ?";
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, memberId);
+
+            resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                final Member member = new Member();
+                member.setMemberId(resultSet.getString("member_id"));
+                member.setMoney(resultSet.getInt("money"));
+                return member;
+            } else {
+                throw new NoSuchElementException("membern ot found memberId=" + memberId);
+            }
+        } catch (SQLException e) {
+            log.error("db error", e);
+            throw e;
+        } finally {
+            close(connection, preparedStatement, resultSet);
+        }
+    }
+
     public void update(final String memberId, final int money) throws SQLException {
         final String sql = "UPDATE member SET money = ? WHERE member_id = ?";
 
@@ -82,6 +111,26 @@ public class MemberRepositoryV2 {
 
         try {
             connection = getConnection();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, money);
+            preparedStatement.setString(2, memberId);
+            final int resultSize = preparedStatement.executeUpdate();
+            log.info("resultSize={}", resultSize);
+        } catch (SQLException e) {
+            log.error("db error", e);
+            throw e;
+        } finally {
+            close(connection, preparedStatement, null);
+        }
+    }
+
+    public void update(final Connection connection, final String memberId, final int money) throws SQLException {
+        final String sql = "UPDATE member SET money = ? WHERE member_id = ?";
+
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+
+        try {
             preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, money);
             preparedStatement.setString(2, memberId);
@@ -119,6 +168,5 @@ public class MemberRepositoryV2 {
     private void close(final Connection connection, final Statement statement, final ResultSet resultSet) {
         JdbcUtils.closeResultSet(resultSet);
         JdbcUtils.closeStatement(statement);
-        JdbcUtils.closeConnection(connection);
     }
 }
