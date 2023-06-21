@@ -1,11 +1,11 @@
-### HTML Form Data
+### Request HTML Form Data
 
 POST http://localhost:8080/request-param
 Content-Type: application/x-www-form-urlencoded
 
 username=http-form-gitchan&age=23
 
-### Body String Data
+### Request Body String Data
 
 POST http://localhost:8080/request-body-string
 Content-Type: text/plain
@@ -14,7 +14,7 @@ Content-Type: text/plain
     "body string gitchan!"
 }
 
-### Body Json Data
+### Request Body Json Data
 
 POST http://localhost:8080/request-body-json
 Content-Type: application/json
@@ -23,3 +23,8 @@ Content-Type: application/json
   "username": "body json gitchan",
   "age": 23
 }
+
+### Response Header
+
+GET http://localhost:8080/response-header
+Content-Type: text/plain;charset=utf-8
