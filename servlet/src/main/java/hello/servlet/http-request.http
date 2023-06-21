@@ -3,7 +3,7 @@
 POST http://localhost:8080/request-param
 Content-Type: application/x-www-form-urlencoded
 
-username=git&age=23
+username=http-form-gitchan&age=23
 
 ### Body String Data
 
@@ -11,5 +11,15 @@ POST http://localhost:8080/request-body-string
 Content-Type: text/plain
 
 {
-    "hello!"
+    "body string gitchan!"
+}
+
+### Body Json Data
+
+POST http://localhost:8080/request-body-json
+Content-Type: application/json
+
+{
+  "username": "body json gitchan",
+  "age": 23
 }
