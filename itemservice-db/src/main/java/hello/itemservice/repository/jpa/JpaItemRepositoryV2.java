@@ -6,12 +6,14 @@ import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
 
 @Repository
+@Transactional
 @RequiredArgsConstructor
 public class JpaItemRepositoryV2 implements ItemRepository {
 
@@ -41,14 +43,14 @@ public class JpaItemRepositoryV2 implements ItemRepository {
         final Integer maxPrice = cond.getMaxPrice();
 
         if (StringUtils.hasText(itemName) && maxPrice != null) {
-            return repository.findItems(itemName, maxPrice);
+            return repository.findItems("%" + itemName + "%", maxPrice);
         }
         if (StringUtils.hasText(itemName)) {
-            return repository.findByItemNameLike(itemName);
+            return repository.findByItemNameLike("%" + itemName + "%");
         }
         if (maxPrice != null) {
             return repository.findByPriceLessThanEqual(maxPrice);
         }
         return repository.findAll();
-     }
+    }
 }
