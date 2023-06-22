@@ -5,33 +5,21 @@ import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionStatus;
-import org.springframework.transaction.interceptor.DefaultTransactionAttribute;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+@Transactional
 @SpringBootTest
 class ItemRepositoryTest {
 
     @Autowired
     ItemRepository itemRepository;
-
-    @Autowired
-    PlatformTransactionManager transactionManager;
-    private TransactionStatus status;
-
-    @BeforeEach
-    void setUp() {
-        // start transaction
-        status = transactionManager.getTransaction(new DefaultTransactionAttribute());
-    }
 
     @AfterEach
     void tearDown() {
@@ -39,9 +27,6 @@ class ItemRepositoryTest {
         if (itemRepository instanceof MemoryItemRepository) {
             ((MemoryItemRepository) itemRepository).clearStore();
         }
-
-        // transaction rollback
-        transactionManager.rollback(status);
     }
 
     @Test
