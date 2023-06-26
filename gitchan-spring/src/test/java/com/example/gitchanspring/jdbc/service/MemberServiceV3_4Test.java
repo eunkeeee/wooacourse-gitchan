@@ -10,27 +10,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
-import org.springframework.jdbc.datasource.DataSourceTransactionManager;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
-import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionManager;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 
-import static com.example.gitchanspring.jdbc.connection.ConnectionConst.*;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThatThrownBy;
 
 /*
- * 트랜잭션 - 트랜잭션 AOP 매니저
+ * 트랜잭션 - DataSource, TransactionManager 자동주입
  * */
 @Slf4j
 @SpringBootTest
-class MemberServiceV3_3Test {
+class MemberServiceV3_4Test {
 
     private static final String MEMBER_A = "memberA";
     private static final String MEMBER_B = "memberB";
     private static final String MEMBER_EX = "ex";
+
+    @Autowired
+    private DataSource dataSource;
+
+    @Autowired
+    private TransactionManager transactionManager;
 
     @Autowired
     private MemberRepositoryV3 memberRepository;
@@ -40,19 +43,16 @@ class MemberServiceV3_3Test {
 
     @TestConfiguration
     static class TestConfig {
-        @Bean
-        DataSource dataSource() {
-            return new DriverManagerDataSource(URL, USERNAME, PASSWORD);
-        }
 
-        @Bean
-        PlatformTransactionManager transactionManager() {
-            return new DataSourceTransactionManager(dataSource());
+        private final DataSource dataSource;
+
+        TestConfig(final DataSource dataSource) {
+            this.dataSource = dataSource;
         }
 
         @Bean
         MemberRepositoryV3 memberRepositoryV3() {
-            return new MemberRepositoryV3(dataSource());
+            return new MemberRepositoryV3(dataSource);
         }
 
         @Bean
