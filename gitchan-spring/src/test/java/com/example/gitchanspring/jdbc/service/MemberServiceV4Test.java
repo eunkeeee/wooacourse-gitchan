@@ -2,7 +2,7 @@ package com.example.gitchanspring.jdbc.service;
 
 import com.example.gitchanspring.jdbc.domain.Member;
 import com.example.gitchanspring.jdbc.repository.MemberRepository;
-import com.example.gitchanspring.jdbc.repository.MemberRepositoryV4_1;
+import com.example.gitchanspring.jdbc.repository.MemberRepositoryV4_2;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
@@ -43,7 +43,7 @@ class MemberServiceV4Test {
 
         @Bean
         MemberRepository memberRepository() {
-            return new MemberRepositoryV4_1(dataSource);
+            return new MemberRepositoryV4_2(dataSource);
         }
 
         @Bean
