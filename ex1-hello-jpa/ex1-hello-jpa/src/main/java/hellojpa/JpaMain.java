@@ -17,7 +17,8 @@ public class JpaMain {
 
         try {
             final Member member = em.find(Member.class, 1L);
-            em.remove(member);
+
+            member.setName("수정된 깃짱");
 
             tx.commit();
         } catch (Exception e) {
