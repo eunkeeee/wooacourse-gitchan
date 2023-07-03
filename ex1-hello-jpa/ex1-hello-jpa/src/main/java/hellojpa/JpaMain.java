@@ -16,6 +16,14 @@ public class JpaMain {
         tx.begin();
 
         try {
+            final Member member = new Member();
+            member.setName("깃짱");
+
+            System.out.println("===PERSIST START===");
+            em.persist(member);
+            System.out.println("member.getId() = " + member.getId());
+            System.out.println("===PERSIST END");
+
             tx.commit(); // 여기서 두 번의 쿼리가 날아감
         } catch (Exception e) {
             tx.rollback();
