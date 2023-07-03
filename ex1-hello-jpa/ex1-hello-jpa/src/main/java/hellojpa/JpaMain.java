@@ -19,25 +19,15 @@ public class JpaMain {
             final long id = 3L;
 
             // 비영속 상태
-            final Member member = new Member();
-            member.setName("깃짱");
-            member.setId(id);
+            final Member memberA = new Member(4L, "깃짱");
+            final Member memberB = new Member(5L, "훈짱");
 
             // 영속
-            System.out.println("==BEFORE PERSIST==");
-//            em.persist(member);
-            final Member findMember1 = em.find(Member.class, id);
-            final Member findMember2 = em.find(Member.class, id); // 두 번째 조회는 1차 캐시에서 조회하므로, 조회 쿼리가 날아가지 않음.
-            System.out.println("findMember1 = " + findMember1);
-            System.out.println("findMember2 = " + findMember2);
+            em.persist(memberA);
+            em.persist(memberB);
+            System.out.println("=================");
 
-            System.out.println("result = " + (findMember1 == findMember2)); // true
-
-            System.out.println("==AFTER PERSIST==");
-
-            System.out.println("==BEFORE COMMIT==");
-            tx.commit(); // 쿼리가 날아가는 시점
-            System.out.println("==AFTER COMMIT==");
+            tx.commit(); // 여기서 두 번의 쿼리가 날아감
         } catch (Exception e) {
             tx.rollback();
         } finally {
