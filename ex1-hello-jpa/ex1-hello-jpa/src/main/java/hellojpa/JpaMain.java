@@ -19,12 +19,12 @@ public class JpaMain {
             final long id = 3L;
 
             // 비영속 상태
-            final Member memberA = new Member(4L, "깃짱");
-            final Member memberB = new Member(5L, "훈짱");
+            final Member memberA = new Member(8L, "깃짱");
 
             // 영속
             em.persist(memberA);
-            em.persist(memberB);
+            em.flush();
+
             System.out.println("=================");
 
             tx.commit(); // 여기서 두 번의 쿼리가 날아감
