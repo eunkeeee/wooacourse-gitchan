@@ -35,7 +35,6 @@ public class Member {
     private LocalDateTime testLocalDateTime;
 
     public Member() {
-
     }
 
     public Long getId() {

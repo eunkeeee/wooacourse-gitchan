@@ -16,17 +16,6 @@ public class JpaMain {
         tx.begin();
 
         try {
-            final long id = 3L;
-
-            // 비영속 상태
-            final Member memberA = new Member(8L, "깃짱");
-
-            // 영속
-            em.persist(memberA);
-            em.flush();
-
-            System.out.println("=================");
-
             tx.commit(); // 여기서 두 번의 쿼리가 날아감
         } catch (Exception e) {
             tx.rollback();
