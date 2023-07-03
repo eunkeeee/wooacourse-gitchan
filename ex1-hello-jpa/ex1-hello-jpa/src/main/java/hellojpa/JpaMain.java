@@ -25,9 +25,12 @@ public class JpaMain {
 
             // 영속
             System.out.println("==BEFORE PERSIST==");
-            em.persist(member);
-            final Member findMember = em.find(Member.class, id); // 1차 캐시에서 조회하므로, 조회 쿼리가 날아가지 않음.
-            System.out.println("findMember = " + findMember);
+//            em.persist(member);
+            final Member findMember1 = em.find(Member.class, id);
+            final Member findMember2 = em.find(Member.class, id); // 두 번째 조회는 1차 캐시에서 조회하므로, 조회 쿼리가 날아가지 않음.
+            System.out.println("findMember1 = " + findMember1);
+            System.out.println("findMember2 = " + findMember2);
+
             System.out.println("==AFTER PERSIST==");
 
             System.out.println("==BEFORE COMMIT==");
