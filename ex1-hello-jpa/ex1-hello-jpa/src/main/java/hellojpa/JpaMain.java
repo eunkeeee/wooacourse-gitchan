@@ -16,14 +16,18 @@ public class JpaMain {
         tx.begin();
 
         try {
+            final long id = 3L;
+
             // 비영속 상태
             final Member member = new Member();
             member.setName("깃짱");
-            member.setId(1L);
+            member.setId(id);
 
             // 영속
             System.out.println("==BEFORE PERSIST==");
-            em.persist(member); // 아무 일도 일어나지 않음
+            em.persist(member);
+            final Member findMember = em.find(Member.class, id); // 1차 캐시에서 조회하므로, 조회 쿼리가 날아가지 않음.
+            System.out.println("findMember = " + findMember);
             System.out.println("==AFTER PERSIST==");
 
             System.out.println("==BEFORE COMMIT==");
