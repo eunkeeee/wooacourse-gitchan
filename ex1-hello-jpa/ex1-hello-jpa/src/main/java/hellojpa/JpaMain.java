@@ -16,11 +16,19 @@ public class JpaMain {
         tx.begin();
 
         try {
-            final Member member = em.find(Member.class, 1L);
+            // 비영속 상태
+            final Member member = new Member();
+            member.setName("깃짱");
+            member.setId(1L);
 
-            member.setName("수정된 깃짱");
+            // 영속
+            System.out.println("==BEFORE PERSIST==");
+            em.persist(member); // 아무 일도 일어나지 않음
+            System.out.println("==AFTER PERSIST==");
 
-            tx.commit();
+            System.out.println("==BEFORE COMMIT==");
+            tx.commit(); // 쿼리가 날아가는 시점
+            System.out.println("==AFTER COMMIT==");
         } catch (Exception e) {
             tx.rollback();
         } finally {
