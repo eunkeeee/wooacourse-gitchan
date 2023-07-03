@@ -1,23 +1,41 @@
 package hellojpa;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
-@Table(name = "member") // 생략 가능
 public class Member {
 
     @Id
     private Long id;
-    private String name;
+
+    @Column(name = "name")
+    private String username;
+
+    private Integer age;
+
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDate;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date lastModifiedDate;
+
+    @Lob
+    private String description;
+
+    @Transient
+    private LocalDate testLocalDate;
+
+    @Transient
+    private LocalDateTime testLocalDateTime;
 
     public Member() {
-    }
 
-    public Member(final Long id, final String name) {
-        this.id = id;
-        this.name = name;
     }
 
     public Long getId() {
@@ -29,18 +47,18 @@ public class Member {
     }
 
     public String getName() {
-        return name;
+        return username;
     }
 
-    public void setName(final String name) {
-        this.name = name;
+    public void setName(final String username) {
+        this.username = username;
     }
 
     @Override
     public String toString() {
         return "Member{" +
                 "id=" + id +
-                ", name='" + name + '\'' +
+                ", name='" + username + '\'' +
                 '}';
     }
 }
