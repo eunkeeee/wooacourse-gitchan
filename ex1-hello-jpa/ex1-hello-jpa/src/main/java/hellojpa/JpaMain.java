@@ -31,6 +31,8 @@ public class JpaMain {
             System.out.println("findMember1 = " + findMember1);
             System.out.println("findMember2 = " + findMember2);
 
+            System.out.println("result = " + (findMember1 == findMember2)); // true
+
             System.out.println("==AFTER PERSIST==");
 
             System.out.println("==BEFORE COMMIT==");
