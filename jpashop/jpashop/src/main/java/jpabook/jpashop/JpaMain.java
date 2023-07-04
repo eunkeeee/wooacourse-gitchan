@@ -1,7 +1,6 @@
 package jpabook.jpashop;
 
-import jpabook.jpashop.domain.Order;
-import jpabook.jpashop.domain.OrderItem;
+import jpabook.jpashop.domain.parent.Movie;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,8 +17,18 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Order order = new Order();
-            order.addOrderItem(new OrderItem());
+            Movie movie = new Movie();
+            movie.setDirector("A");
+            movie.setActor("B");
+            movie.setName("바람과 함께 사라지다.");
+            movie.setPrice(10000);
+            em.persist(movie);
+
+            em.flush();
+            em.clear();
+
+            Movie findMovie = em.find(Movie.class, movie.getId());
+            System.out.println("findMovie = " + findMovie);
 
             tx.commit();
         } catch (Exception e) {
