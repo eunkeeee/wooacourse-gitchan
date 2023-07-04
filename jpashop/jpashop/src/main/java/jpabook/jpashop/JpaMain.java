@@ -1,5 +1,8 @@
 package jpabook.jpashop;
 
+import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.domain.Team;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
@@ -15,7 +18,21 @@ public class JpaMain {
         tx.begin();
 
         try {
-            tx.commit(); // 여기서 두 번의 쿼리가 날아감
+            Team team = new Team();
+            team.setName("깃짱네팀");
+            em.persist(team);
+
+            Member member = new Member();
+            member.setName("깃짱");
+            member.setTeam(team);
+            em.persist(member);
+
+            Member findMember = em.find(Member.class, member.getId());
+            Team findTeam = findMember.getTeam();
+
+            System.out.println("findTeam = " + findTeam);
+
+            tx.commit();
         } catch (Exception e) {
             tx.rollback();
         } finally {
