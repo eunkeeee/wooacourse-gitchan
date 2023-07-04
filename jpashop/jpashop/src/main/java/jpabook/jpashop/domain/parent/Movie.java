@@ -1,8 +1,10 @@
 package jpabook.jpashop.domain.parent;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 
 @Entity
+@DiscriminatorValue("M")
 public class Movie extends ParentItem {
 
     private String director;
