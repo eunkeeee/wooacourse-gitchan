@@ -3,6 +3,7 @@ package jpabook.jpashop.domain;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Entity
 public class Team {
@@ -45,6 +46,9 @@ public class Team {
         return "Team{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
+                ", members=" + members.stream()
+                .map(Member::getName)
+                .collect(Collectors.toList()) +
                 '}';
     }
 }

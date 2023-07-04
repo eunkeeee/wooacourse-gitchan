@@ -25,7 +25,7 @@ public class JpaMain {
 
             Member member = new Member();
             member.setName("깃짱");
-            member.setTeam(team);
+            member.changeTeam(team);
             em.persist(member);
 
             em.flush();
