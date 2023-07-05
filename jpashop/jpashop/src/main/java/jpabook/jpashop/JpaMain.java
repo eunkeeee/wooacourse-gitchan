@@ -1,6 +1,7 @@
 package jpabook.jpashop;
 
 import baseEntity.BaseMember;
+import jpabook.jpashop.domain.Book;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,12 +19,10 @@ public class JpaMain {
         tx.begin();
 
         try {
-            BaseMember member = new BaseMember();
-            member.setCreatedBy("gitchan");
-            member.setCreatedDate(LocalDateTime.now());
-            member.setName("gitchan");
-
-            em.persist(member);
+            Book book = new Book();
+            book.setName("JPA");
+            book.setAuthor("gitchan");
+            em.persist(book);
 
             tx.commit();
         } catch (Exception e) {
