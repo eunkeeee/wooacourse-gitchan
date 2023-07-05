@@ -3,9 +3,8 @@ package jpabook.jpashop.domain.parent;
 import javax.persistence.*;
 
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn
-public class ParentItem {
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public abstract class ParentItem {
 
     @Id
     @GeneratedValue
