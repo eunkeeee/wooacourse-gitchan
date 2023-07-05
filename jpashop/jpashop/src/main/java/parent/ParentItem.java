@@ -2,7 +2,7 @@ package parent;
 
 import javax.persistence.*;
 
-@Entity
+//@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn
 public class ParentItem {
