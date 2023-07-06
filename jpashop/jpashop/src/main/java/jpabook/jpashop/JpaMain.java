@@ -19,12 +19,21 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setName("gitchan");
-            member.setHomdAddress(new Address("city", "street", "zipcode"));
-            member.setWorkPeriod(new Period());
+            Address address = new Address("city", "street", "zipcode");
 
-            em.persist(member);
+            Member member1 = new Member();
+            member1.setName("member1");
+            member1.setHomdAddress(address);
+            member1.setWorkPeriod(new Period());
+            em.persist(member1);
+
+            Member member2 = new Member();
+            member2.setName("member2");
+            member2.setHomdAddress(address);
+            member2.setWorkPeriod(new Period());
+            em.persist(member2);
+
+            member1.getHomdAddress().setCity("newCity");
 
             tx.commit();
         } catch (Exception e) {
