@@ -2,20 +2,26 @@ package jpabook.jpashop.domain;
 
 import javax.persistence.*;
 
-//@Entity
+@Entity
 public class Member {
 
     @Id
     @GeneratedValue
-    @Column(name = "MEMBER_ID")
+    @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "NAME")
     private String name;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "TEAM_ID")
-    private Team team;
+    // 기간
+    @Embedded
+    private Period workPeriod;
+
+    // 주소
+    @Embedded
+    private Address homdAddress;
+
+    public Member() {
+    }
 
     public Long getId() {
         return id;
@@ -33,11 +39,19 @@ public class Member {
         this.name = name;
     }
 
-    public Team getTeam() {
-        return team;
+    public Period getWorkPeriod() {
+        return workPeriod;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setWorkPeriod(Period workPeriod) {
+        this.workPeriod = workPeriod;
+    }
+
+    public Address getHomdAddress() {
+        return homdAddress;
+    }
+
+    public void setHomdAddress(Address homdAddress) {
+        this.homdAddress = homdAddress;
     }
 }
