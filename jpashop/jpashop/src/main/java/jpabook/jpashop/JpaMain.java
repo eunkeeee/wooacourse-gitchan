@@ -35,8 +35,6 @@ public class JpaMain {
             member2.setWorkPeriod(new Period());
             em.persist(member2);
 
-            member1.getHomdAddress().setCity("newCity");
-
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
