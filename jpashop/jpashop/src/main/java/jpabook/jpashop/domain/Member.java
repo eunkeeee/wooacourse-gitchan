@@ -16,7 +16,6 @@ public class Member {
     @Column(name = "member_id")
     private Long id;
 
-    @Column(name = "USERNAME")
     private String name;
 
     // 기간
