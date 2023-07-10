@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
+import java.util.Set;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -19,21 +21,36 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Address address = new Address("homeCity", "street", "zipcode");
+            Member member = new Member();
+            member.setName("member1");
+            member.setHomeAddress(new Address("homeCity", "street", "zipcode"));
 
-            Member member1 = new Member();
-            member1.setName("member1");
-            member1.setHomeAddress(address);
+            member.getFavoriteFoods().add("치킨");
+            member.getFavoriteFoods().add("족발");
+            member.getFavoriteFoods().add("피자");
 
-            member1.getFavoriteFoods().add("치킨");
-            member1.getFavoriteFoods().add("족발");
-            member1.getFavoriteFoods().add("피자");
+            member.getAddressHistory().add(new Address("old1", "street", "zipcode"));
+            member.getAddressHistory().add(new Address("old2", "street", "zipcode"));
 
-            member1.getAddressHistory().add(new Address("old1", "street", "zipcode"));
-            member1.getAddressHistory().add(new Address("old2", "street", "zipcode"));
+            member.setWorkPeriod(new Period());
+            em.persist(member);
 
-            member1.setWorkPeriod(new Period());
-            em.persist(member1);
+            em.flush();
+            em.clear();
+
+            System.out.println("==========START==========");
+            Member findMember = em.find(Member.class, member.getId());
+
+            System.out.println("==========LAZY-LOADING==========");
+            List<Address> addressHistory = findMember.getAddressHistory();
+            for (Address address : addressHistory) {
+                System.out.println("address.getCity() = " + address.getCity());
+            }
+
+            Set<String> favoriteFoods = findMember.getFavoriteFoods();
+            for (String favoriteFood : favoriteFoods) {
+                System.out.println("favoriteFood = " + favoriteFood);
+            }
 
             tx.commit();
         } catch (Exception e) {
