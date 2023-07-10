@@ -1,14 +1,12 @@
 package jpabook.jpashop;
 
-import jpabook.jpashop.domain.Address;
-import jpabook.jpashop.domain.AddressEntity;
 import jpabook.jpashop.domain.Member;
-import jpabook.jpashop.domain.Period;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -20,34 +18,23 @@ public class JpaMain {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setName("member1");
-            member.setAddress(new Address("homeCity", "street", "zipcode"));
+            Member member1 = new Member();
+            member1.setName("깃짱");
 
-            member.getFavoriteFoods().add("치킨");
-            member.getFavoriteFoods().add("족발");
-            member.getFavoriteFoods().add("피자");
+            Member member2 = new Member();
+            member2.setName("훈짱");
 
-            member.getAddressHistory().add(new AddressEntity("old1", "street", "zipcode"));
-            member.getAddressHistory().add(new AddressEntity("old2", "street", "zipcode"));
+            em.persist(member1);
+            em.persist(member2);
 
-            member.setWorkPeriod(new Period());
-            em.persist(member);
+            List<Member> result = em.createQuery(
+                    "select m from Member as m where m.name like '%짱%'",
+                    Member.class
+            ).getResultList();
 
-            em.flush();
-            em.clear();
-
-            System.out.println("==========START==========");
-            Member findMember = em.find(Member.class, member.getId());
-
-            System.out.println("==========LAZY-LOADING==========");
-
-            // 치킨 -> 냉면
-            findMember.getFavoriteFoods().remove("치킨");
-            findMember.getFavoriteFoods().add("냉면");
-
-//            findMember.getAddressHistory().remove(new Address("old1", "street", "zipcode"));
-//            findMember.getAddressHistory().add(new Address("newCity", "street", "10000"));
+            for (Member member : result) {
+                System.out.println("member = " + member);
+            }
 
             tx.commit();
         } catch (Exception e) {

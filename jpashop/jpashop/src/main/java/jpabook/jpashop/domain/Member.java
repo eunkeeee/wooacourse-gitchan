@@ -81,4 +81,11 @@ public class Member {
     public void setAddress(Address homeAddress) {
         this.address = homeAddress;
     }
+
+    @Override
+    public String toString() {
+        return "Member{" +
+                "name='" + name + '\'' +
+                '}';
+    }
 }
