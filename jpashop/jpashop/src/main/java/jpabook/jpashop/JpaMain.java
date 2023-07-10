@@ -9,7 +9,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 import java.util.List;
-import java.util.Set;
 
 public class JpaMain {
     public static void main(String[] args) {
@@ -42,15 +41,19 @@ public class JpaMain {
             Member findMember = em.find(Member.class, member.getId());
 
             System.out.println("==========LAZY-LOADING==========");
-            List<Address> addressHistory = findMember.getAddressHistory();
-            for (Address address : addressHistory) {
-                System.out.println("address.getCity() = " + address.getCity());
-            }
 
-            Set<String> favoriteFoods = findMember.getFavoriteFoods();
-            for (String favoriteFood : favoriteFoods) {
-                System.out.println("favoriteFood = " + favoriteFood);
-            }
+            // homeCity -> newCity
+            List<Address> addressHistory = findMember.getAddressHistory();
+//            findMember.getHomeAddress().setCity("newCity"); // 이렇게 하면 안된다! 값 타입은 immutable
+            Address homeAddress = findMember.getHomeAddress();
+            findMember.setHomeAddress(new Address("newCity", homeAddress.getStreet(), homeAddress.getZipcode()));
+
+            // 치킨 -> 냉면
+            findMember.getFavoriteFoods().remove("치킨");
+            findMember.getFavoriteFoods().add("냉면");
+
+            findMember.getAddressHistory().remove(new Address("old1", "street", "zipcode"));
+            findMember.getAddressHistory().add(new Address("newCity", "street", "10000"));
 
             tx.commit();
         } catch (Exception e) {
