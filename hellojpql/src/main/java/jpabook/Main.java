@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -20,12 +21,15 @@ public class Main {
             member.setAge(23);
             em.persist(member);
 
-            Member singleResult = em.createQuery(
-                            "select m from Member m where m.username = :username",
-                            Member.class
-                    ).setParameter("username", "gitchan")
-                    .getSingleResult();
-            System.out.println("singleResult = " + singleResult);
+            List<MemberDto> result = em.createQuery(
+                            "select new jpabook.MemberDto(m.username, m.age) from Member m",
+                            MemberDto.class
+                    )
+                    .getResultList();
+
+            for (MemberDto memberDto : result) {
+                System.out.println("memberDto = " + memberDto);
+            }
 
             tx.commit();
         } catch (Exception e) {
