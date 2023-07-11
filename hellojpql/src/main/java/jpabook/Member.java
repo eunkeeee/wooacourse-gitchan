@@ -53,7 +53,6 @@ public class Member {
                 "id=" + id +
                 ", username='" + username + '\'' +
                 ", age=" + age +
-                ", team=" + team +
                 '}';
     }
 }

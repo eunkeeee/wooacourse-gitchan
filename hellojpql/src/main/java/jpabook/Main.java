@@ -16,19 +16,20 @@ public class Main {
         tx.begin();
 
         try {
-            Member member = new Member();
-            member.setUsername("gitchan");
-            member.setAge(23);
-            em.persist(member);
+            for (int i = 0; i < 100; i++) {
+                Member member = new Member();
+                member.setUsername("gitchan" + i);
+                member.setAge(23 + i);
+                em.persist(member);
+            }
 
-            List<MemberDto> result = em.createQuery(
-                            "select new jpabook.MemberDto(m.username, m.age) from Member m",
-                            MemberDto.class
-                    )
+            List<Member> result = em.createQuery("select m from Member m order by m.age", Member.class)
+                    .setFirstResult(0)
+                    .setMaxResults(10)
                     .getResultList();
 
-            for (MemberDto memberDto : result) {
-                System.out.println("memberDto = " + memberDto);
+            for (Member m : result) {
+                System.out.println("m = " + m);
             }
 
             tx.commit();
