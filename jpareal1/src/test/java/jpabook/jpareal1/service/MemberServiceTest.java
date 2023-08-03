@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.assertj.core.api.AssertionsForClassTypes.fail;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @RunWith(SpringRunner.class)
@@ -32,8 +33,17 @@ public class MemberServiceTest {
         assertEquals(member, memberRepository.findOne(savedId));
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void 중복회원_예외() {
+        Member member1 = new Member();
+        member1.setName("깃짱");
 
+        Member member2 = new Member();
+        member2.setName("깃짱");
+
+        memberService.join(member1);
+        memberService.join(member2);
+
+        fail("예외가 발생해야 한다.");
     }
 }
